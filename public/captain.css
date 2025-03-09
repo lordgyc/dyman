@@ -1,0 +1,697 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Verdana', sans-serif;
+    height: 100%;
+    background-color: #e8f5e9; /* Light green background */
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100%;
+}
+
+h1 {
+    padding: 20px;
+    margin: 0;
+    background-color: #2e7d32; /* Dark green background */
+    color: white;
+    border-bottom: 1px solid #1b5e20; /* Darker green border */
+    font-size: 24px;
+}
+
+.tabs {
+    display: flex;
+    background-color: #4caf50; /* Medium green background */
+    padding: 10px 20px 0;
+    border-bottom: 1px solid #1b5e20; /* Darker green border */
+}
+
+.tab-button {
+    padding: 10px 20px;
+    margin-right: 8px;
+    background-color: #81c784; /* Light green background */
+    border: 1px solid #4caf50; /* Medium green border */
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    color: white; /* Changed to white */
+    font-weight: bold; /* Added bold font weight */
+    transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
+}
+
+/* Add Guests tab styles */
+
+.guests-tab-button {
+  padding: 10px 20px;
+  margin-right: 8px;
+  background-color: #81c784; /* Light green background */
+  border: 1px solid #4caf50; /* Medium green border */
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  color: white; /* Changed to white */
+  font-weight: bold; /* Added bold font weight */
+  transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
+}
+
+.guests-tab-button.active {
+  background-color: #2e7d32; /* Dark green background */
+  color: white;
+  box-shadow: 0 0 5px rgba(46, 125, 50, 0.5); /* Subtle green glow */
+}
+
+.guests-tab-content {
+  display: none; /* Hide Guests tab content by default */
+}
+
+.guests-tab-content.active {
+  display: block; /* Show Guests tab content when active */
+}
+.tab-button.active {
+    background-color: #2e7d32; /* Dark green background */
+    color: white;
+    box-shadow: 0 0 5px rgba(46, 125, 50, 0.5); /* Subtle green glow */
+}
+
+.tab-button:hover {
+    background-color: #43a047; /* Slightly darker green on hover */
+    color: white;
+}
+
+.main-content {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+.tab-content {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    background-color: #ffffff; /* White background */
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.tab-pane {
+    display: none;
+}
+
+.tab-pane.active {
+    display: block;
+}
+
+.button-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 15px;
+}
+
+.button-list button {
+    padding: 50px 70px;
+    background: linear-gradient(135deg, #66bb6a, #43a047); /* Green gradient */
+    color: white;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 20px;
+    transition: background-color 0.3s, box-shadow 0.3s, transform 0.3s;
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+.button-list button:hover {
+    background: linear-gradient(135deg, #43a047, #66bb6a); /* Reverse green gradient on hover */
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+    transform: translateY(-3px);
+}
+
+.meal-selection {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+.order-item.overdue {
+    background: linear-gradient(to right, rgb(202, 62, 62), white);
+}
+.order-sidebar {
+    width: 250px;
+    padding: 15px;
+    background-color: #ffffff; /* White background */
+    border-left: 1px solid #e0e0e0; /* Light border */
+    overflow-y: auto;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+#selectedWaiter {
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #333; /* Dark text */
+}
+
+#orderList {
+    list-style-type: none;
+    padding: 0;
+}
+
+#orderList li {
+    margin-bottom: 4px;
+    padding: 8px;
+    background-color: #f4f5f7; /* Light gray background */
+    border-radius: 4px;
+}
+
+.order-total {
+    margin-top: 8px;
+    font-weight: bold;
+    color: #333; /* Dark text */
+}
+
+#addOrderBtn, #voidOrderBtn {
+    width: 100%;
+    padding: 10px;
+    margin-top: 15px;
+    background-color: #43a047; /* Medium green background */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+#addGuestBtn {
+    width: 100%;
+    padding: 10px;
+    margin-top: 15px;
+    background-color: #cff027; /* Medium green background */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#addOrderBtn:hover, #voidOrderBtn:hover {
+    background-color: #2e7d32; /* Darker green on hover */
+}
+
+.order-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    padding: 8px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    margin-bottom: 8px;
+    width: 100%;
+}
+
+.order-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.order-item-header {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 4px;
+    width: 100%;
+    margin-bottom: 4px;
+}
+
+.order-item-header p {
+    margin: 0;
+    font-size: 0.85em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.order-item ul {
+    list-style: none;
+    padding: 0;
+    margin: 2px 0;
+}
+
+.order-item li {
+    padding: 2px 0;
+    font-size: 0.85em;
+}
+
+.order-item button {
+    padding: 4px 8px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    font-size: 0.85em;
+    transition: background-color 0.3s;
+}
+
+.order-item button:first-child {
+    background-color: #43a047;
+    color: white;
+}
+
+.cancel-order-btn {
+    background-color: #c62828;
+    color: white;
+}
+
+.order-item button:hover {
+    opacity: 0.9;
+}
+
+.order-item.expired {
+    background: linear-gradient(to right, #c8e6c9, #a5d6a7); /* Light green gradient */
+}
+
+.order-item.completed {
+    display: flex; /* Align elements horizontally */
+    flex-direction: row; /* Ensure horizontal alignment */
+    justify-content: space-between; /* Space out elements */
+    align-items: center; /* Center items vertically */
+    background: linear-gradient(to right, #a5d6a7, #66bb6a); /* Green gradient */
+    margin-bottom: 15px; /* Add more space between cards */
+    padding: 10px; /* Add padding for better spacing */
+    border-radius: 4px; /* Keep border radius for rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.order-item.completed .meals-list {
+    display: flex;
+    flex-direction: column; /* Align meals vertically */
+    margin-left: 20px; /* Add some space from other elements */
+}
+
+.filter-options select {
+    padding: 8px;
+    margin-right: 8px;
+    border: 1px solid #e0e0e0; /* Light border */
+    border-radius: 4px;
+    background-color: #ffffff; /* White background */
+    cursor: pointer;
+    transition: background-color 0.2s;
+    font-size: 14px;
+}
+
+.filter-options select:hover {
+    background-color: #f4f5f7; /* Light gray background */
+}
+
+.filter-options select:focus {
+    outline: none;
+    border-color: #007bff; /* Blue border on focus */
+}
+
+.breadcrumb {
+    padding: 10px;
+    background-color: #ffffff; /* White background */
+    border-bottom: 1px solid #e0e0e0; /* Light border */
+    font-size: 14px;
+    color: #333; /* Dark text */
+}
+
+.redirect-button {
+    padding: 15px 30px;
+    margin-bottom: 10px;
+    background: linear-gradient(135deg, #66bb6a, #43a047); /* Green gradient */
+    color: white;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 20px;
+    transition: background-color 0.3s, box-shadow 0.3s, transform 0.3s;
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+.redirect-button:hover {
+    background: linear-gradient(135deg, #43a047, #66bb6a); /* Reverse green gradient on hover */
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+    transform: translateY(-3px);
+}
+
+#subcategoryTab, #mealSelectorTab {
+    display: none;
+}
+
+.static-text {
+    color: #1b5e20;
+    font-weight: bold;
+    font-size: 0.85em;
+}
+
+.cancel-order-btn {
+    background-color: #c62828; /* Red background */
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: background-color 0.3s;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+.cancel-order-btn:hover {
+    background-color: #b71c1c; /* Darker red on hover */
+}
+
+/* Add these styles to your captain.css file */
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 300px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.modal-content h2 {
+    margin-top: 0;
+    color: #333;
+}
+
+.modal-content input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.modal-content button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    background-color: #43a047; /* Medium green background */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.modal-content button:hover {
+    background-color: #2e7d32; /* Darker green on hover */
+}
+
+#cancelAdminCredentials {
+    background-color: #c62828; /* Red background */
+}
+
+#cancelAdminCredentials:hover {
+    background-color: #b71c1c; /* Darker red on hover */
+}
+
+.search-container {
+    position: relative;
+    display: inline-block;
+}
+
+.search-container input {
+    padding: 8px;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    width: 200px;
+    font-size: 14px;
+}
+
+.suggestions-dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.suggestion-item {
+    padding: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.suggestion-item:hover {
+    background-color: #f4f5f7;
+}
+
+.active-suggestion {
+    background-color: #e8f5e9;
+}
+
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 15px 25px;
+    border-radius: 4px;
+    color: white;
+    font-weight: bold;
+    z-index: 1000;
+    animation: slideIn 0.5s ease-out;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.notification.success {
+    background-color: #43a047;
+}
+
+.notification.error {
+    background-color: #c62828;
+}
+
+.notification.info {
+    background-color: #1976d2;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Add these new styles */
+.update-order-btn {
+    padding: 8px 16px;
+    background-color: #2196F3;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 10px;
+    transition: background-color 0.3s;
+}
+
+.update-order-btn.active {
+    background-color: #1565C0;
+    box-shadow: 0 0 5px rgba(33, 150, 243, 0.5);
+}
+
+.update-order-btn:hover {
+    background-color: #1976D2;
+}
+
+.order-item.selected-for-update {
+    background: linear-gradient(to right, #2196F3, #64B5F6); /* Blue gradient */
+    border: 2px solid #2196F3;
+    box-shadow: 0 0 15px rgba(33, 150, 243, 0.4);
+}
+
+.order-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.order-item {
+    background-color: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.order-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.order-item-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.order-item ul {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0;
+}
+
+.order-item li {
+    padding: 5px 0;
+}
+
+.meal-checkbox {
+    margin-right: 8px;
+    cursor: pointer;
+}
+
+.meal-checkbox + label {
+    cursor: pointer;
+}
+
+.order-item-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    width: 100%;
+    justify-content: flex-end;
+}
+
+/* Style for when update mode is active */
+.update-order-btn.active ~ .order-container .order-item:hover {
+    border-color: #2196F3;
+    box-shadow: 0 0 10px rgba(33, 150, 243, 0.3);
+    transform: translateY(-2px);
+}
+
+/* Style for selected order */
+.order-item.selected-for-update {
+    border: 2px solid #2196F3;
+    box-shadow: 0 0 15px rgba(33, 150, 243, 0.4);
+}
+
+.order-item > div:nth-child(2) {
+    margin: 2px 0;
+}
+
+.order-item > div:nth-child(2) > p {
+    margin: 0 0 2px 0;
+    font-size: 0.85em;
+}
+
+.delete-meal-btn {
+    background-color: #ff5252;
+    color: white;
+    border: none;
+    border-radius: 12px; /* Changed to accommodate text */
+    width: auto; /* Allow width to adjust based on content */
+    height: auto; /* Allow height to adjust based on content */
+    padding: 4px 8px; /* Adjust padding for better fit */
+    text-align: center;
+    cursor: pointer;
+    margin-left: 8px;
+    font-size: 14px; /* Adjust font size if needed */
+    transition: background-color 0.2s;
+}
+
+.delete-meal-btn:hover {
+    background-color: #ff1744;
+}
+
+/* Update the list item style to accommodate the delete button */
+.order-item li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2px 0;
+    font-size: 0.85em;
+}
+
+.order-item li label {
+    flex: 1;
+    margin-right: 8px;
+}
+#guestsContent input {
+    width: 50%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+#guestsContent button {
+    width: 20%;
+    padding: 10px;
+    margin: 10px 0;
+    background-color: #43a047;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+.guests-tab-content input, .guests-tab-content button {
+  display: none;
+}
+
+.guests-tab-content.active input, .guests-tab-content.active button {
+  display: block;
+}
+.guest-button1 {
+  display: none;
+  padding: 10px;
+  margin: 10px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.guest-button:hover {
+  background-color: #e0e0e0;
+}
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 400px;
+    text-align: center;
+}

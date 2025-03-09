@@ -1,0 +1,378 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f8f9fa; /* Optional: Add a background color */
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+    border: 1px solid #ddd; /* Add border */
+    border-radius: 8px; /* Optional: Add border radius */
+    background-color: white; /* Optional: Add background color */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Add shadow */
+}
+
+/* Admin specific styles */
+.tab-buttons {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.tab-button, .sub-tab-button {
+    padding: 10px 20px;
+    margin-right: 10px;
+    background-color: #f0f0f0;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+.tab-button:hover, .sub-tab-button:hover {
+    background-color: #e0e0e0;
+}
+
+.tab-button.active, .sub-tab-button.active {
+    background-color: #007bff;
+    color: white;
+}
+
+.tab-content {
+    display: none; /* Hide all tab content by default */
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+}
+
+.tab-content.active {
+    display: block; /* Show active tab content */
+}
+
+.sub-tabs {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.sub-tab-content {
+    display: none; /* Hide all sub-tab content by default */
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.sub-tab-content.active {
+    display: block; /* Show active sub-tab content */
+}
+
+.menu-management {
+    display: flex;
+    justify-content: space-between;
+}
+
+.menu-column {
+    flex: 1;
+    margin-right: 20px;
+}
+
+.menu-column:last-child {
+    margin-right: 0;
+}
+
+.clickable-list {
+    margin-top: 10px;
+}
+
+.clickable-list div {
+    padding: 5px 10px;
+    background-color: #f0f0f0;
+    margin-bottom: 5px;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.clickable-list div:hover {
+    background-color: #e0e0e0;
+}
+
+.clickable-list div.active {
+    background-color: #007bff;
+    color: white;
+}
+
+/* Form styles */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 300px;
+    width: 100%; /* Ensure form takes full width of container */
+}
+
+input[type="text"],
+input[type="password"],
+input[type="number"] {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    transition: border-color 0.3s; /* Add transition for hover effect */
+}
+
+input[type="text"]:hover,
+input[type="password"]:hover {
+    border-color: #007bff; /* Change border color on hover */
+}
+
+button[type="submit"] {
+    padding: 10px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s; /* Add transition for hover effect */
+}
+
+button[type="submit"]:hover {
+    background-color: #218838;
+}
+
+/* Captain page styles */
+.main-content {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+.tabs {
+    display: flex;
+    background-color: #f0f0f0;
+    padding: 10px 0;
+}
+
+.tab-pane {
+    display: none; /* Hide all tab panes by default */
+}
+
+.tab-pane.active {
+    display: block; /* Show active tab pane */
+}
+
+.button-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.button-list button {
+    padding: 10px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    min-width: 100px;
+}
+
+.meal-selection {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.order-sidebar {
+    width: 300px;
+    padding: 20px;
+    background-color: #f0f0f0;
+    overflow-y: auto;
+    border-left: 1px solid #ddd;
+}
+
+#addOrderBtn {
+    width: 100%;
+    padding: 10px;
+    margin-top: 20px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+#orderList {
+    list-style-type: none;
+    padding: 0;
+}
+
+#orderList li {
+    margin-bottom: 10px;
+}
+
+#waiterContent, #mealContent {
+    height: 100%;
+    overflow-y: auto;
+}
+
+/* Add styles for the filter section */
+.filter-section {
+    margin-bottom: 20px;
+}
+
+.filter-section select {
+    padding: 8px;
+    margin-right: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.order-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+}
+
+.order-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    padding: 10px;
+    box-sizing: border-box;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.order-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.order-item-header {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.order-item p {
+    margin: 0 10px;
+    font-size: 12px;
+}
+
+.order-item ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.order-item li {
+    font-size: 12px;
+}
+
+.order-item button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 4px 8px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: background-color 0.3s;
+}
+
+.order-item button:hover {
+    background-color: #218838;
+}
+
+.static-text {
+    font-weight: bold;
+    color: #28a745;
+}
+
+.order-count-bar {
+    background-color: #f0f0f0;
+    padding: 10px;
+    margin-bottom: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.clickable-list button {
+    padding: 10px;
+    margin-bottom: 5px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    border-radius: 5px;
+    width: 100%;
+    text-align: left;
+}
+
+.clickable-list button:hover {
+    background-color: #e0e0e0;
+}
+
+.clickable-list button.active {
+    background-color: #007bff;
+    color: white;
+    border-color: #0056b3;
+}
+
+button[disabled] {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/* Add these to your existing styles */
+.input-group {
+    position: relative;
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+}
+
+.input-group input:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+button[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+button[type="submit"]:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+#message {
+    margin-top: 10px;
+    color: #dc3545;
+    text-align: center;
+}

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Login</h1>
+        <form id="loginForm" autocomplete="off">
+            <div class="input-group">
+                <input 
+                    type="text" 
+                    id="username" 
+                    name="username" 
+                    placeholder="Username" 
+                    required 
+                    autocomplete="off"
+                >
+            </div>
+            <div class="input-group">
+                <input 
+                    type="password" 
+                    id="password" 
+                    name="password" 
+                    placeholder="Password" 
+                    required 
+                    autocomplete="off"
+                >
+            </div>
+            <button type="submit" id="loginButton">Login</button>
+        </form>
+        <p id="message"></p>
+    </div>
+    <script>
+        // Inline script to ensure form exists
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('DOM fully loaded');
+            if (!document.getElementById('loginForm')) {
+                console.error('Login form not found in initial load');
+            }
+        });
+    </script>
+    <script src="script.js" defer></script>
+</body>
+</html>

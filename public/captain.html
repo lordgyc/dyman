@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Captain's Dashboard</title>
+    <link rel="stylesheet" href="captain.css">
+    <style>
+
+        .back-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 15px 20px; /* Increase padding for larger buttons */
+            background: linear-gradient(135deg, #f12105, #f6381f); /* Vibrant gradient */
+            color: rgb(250, 250, 250);
+            border: none;
+            border-radius: 12px; /* More rounded corners */
+            cursor: pointer;
+            font-size: 20px; /* Increase font size */
+            transition: background-color 0.3s, box-shadow 0.3s, transform 0.3s;
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* More pronounced shadow */
+        }
+
+        .back-button:hover {
+            background: linear-gradient(135deg, #f71111, hwb(75 16% 0%)); /* Reverse gradient on hover */
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2); /* Increase shadow on hover */
+            transform: translateY(-3px); /* Slightly more lift on hover */
+        }
+    </style>
+</head>
+<body>
+    <button class="back-button" id="backToLogin">Back to Login</button>
+    <div class="container">
+        <h1>Captain's Dashboard</h1>
+        <div class="tabs">
+            <button id="waiterTab" class="tab-button active">Waiters</button>
+            <button id="chefTab" class="tab-button">Chefs</button>
+            <button id="mealTab" class="tab-button">Meals</button>
+            <button id="liveOrdersTab" class="tab-button">Live Orders</button>
+            <button id="completedOrdersTab" class="tab-button">Completed Orders</button>
+            <button id="subcategoryTab" class="tab-button">Subcategories</button>
+            <button id="mealSelectorTab" class="tab-button">Meal Selector</button>
+            <button id="guestsTab" class="guest-button1">Guests</button>
+        </div>
+        <div class="main-content">
+            <div class="tab-content">
+                <div id="waiterContent" class="tab-pane active">
+                    <div id="waiterList" class="button-list"></div>
+                    <div id="selectedWaiter"></div>
+                </div>
+                <div id="chefContent" class="tab-pane">
+                    <div id="chefList" class="button-list"></div>
+                    <div id="selectedChef"></div>
+                </div>
+                <div id="mealContent" class="tab-pane">
+                    <h3>Categories</h3>
+                    <div id="categoryList" class="button-list"></div>
+                </div>
+                <div id="liveOrdersContent" class="tab-pane">
+                    <div id="liveOrderCount" class="order-count">Total Live Orders: 0</div>
+                    <div class="filter-options">
+                        <select id="liveOrdersWaiterFilter">
+                            <option value="">Filter by Waiter</option>
+                        </select>
+                        <select id="liveOrdersChefFilter">
+                            <option value="">Filter by Chef</option>
+                        </select>
+                        <div class="search-container">
+                            <input type="text" id="liveOrdersMealFilter" placeholder="Search meals...">
+                            <div id="liveOrdersMealSuggestions" class="suggestions-dropdown"></div>
+                        </div>
+                        <button id="updateOrderBtn" class="update-order-btn">Update Order</button>
+                    </div>
+
+                    <div id="liveOrdersList" class="order-container"></div>
+                    <div id="adminCredentialsDialog" class="modal">
+                        <div class="modal-content">
+                            <h2>Admin Verification</h2>
+                            <label for="adminUsername">Username:</label>
+                            <input type="text" id="adminUsername" name="adminUsername">
+                            <label for="adminPassword">Password:</label>
+                            <input type="password" id="adminPassword" name="adminPassword">
+                            <button id="submitAdminCredentials">Submit</button>
+                            <button id="cancelAdminCredentials">Cancel</button>
+                        </div>
+                    </div>                    
+                </div>
+                <div id="completedOrdersContent" class="tab-pane">
+                    <div class="filter-options">
+                        <select id="completedOrdersWaiterFilter">
+                            <option value="">Filter by Waiter</option>
+                        </select>
+                        <select id="completedOrdersChefFilter">
+                            <option value="">Filter by Chef</option>
+                        </select>
+                        <div class="search-container">
+                            <input type="text" id="completedOrdersMealFilter" placeholder="Search meals...">
+                            <div id="completedOrdersMealSuggestions" class="suggestions-dropdown"></div>
+                        </div>
+                    </div>
+                    <div id="completedOrdersList" class="order-container"></div>
+                </div>
+                <div id="subcategoryContent" class="tab-pane">
+                    <button id="goToMealsFromSubcategories" class="redirect-button">Go to Meals</button>
+                    <div id="subcategoryList" class="button-list"></div>
+                </div>
+                <div id="mealSelectorContent" class="tab-pane">
+                    <button id="goToMealsFromMealSelector" class="redirect-button">Go to Meals</button>
+                    <div id="mealList" class="button-list"></div>
+                </div>
+                <div id="guestsContent" class="tab-pane">
+                    <div id="guestList" class="button-list"></div>
+                    <div id="selectedGuest"></div>
+                </div>
+            </div>
+            <div class="order-sidebar">
+                <div id="currentWaiter" class="order-waiter">No waiter selected</div>
+                <div id="currentChef" class="order-chef">No chef selected</div>
+                <div id="selected-guest"></div>
+                <ul id="orderList"></ul>
+                <div id="orderTotal" class="order-total">$0.00</div>
+                <button id="addOrderBtn">Add Order</button>
+                <button id="voidOrderBtn">Void</button>
+                <button id="addGuestBtn" class="add-guest-btn">Add Guest</button>
+            </div>
+        </div>
+    </div>
+    <div id="adminCredentialsDialog" class="modal" style="display:none;">
+        <div class="modal-content">
+            <h2>Admin Credentials</h2>
+            <input type="text" id="adminUsername" placeholder="Username"/>
+            <input type="password" id="adminPassword" placeholder="Password"/>
+            <button id="submitAdminCredentials">Submit</button>
+            <button id="cancelAdminCredentials">Cancel</button>
+        </div>
+    </div>
+    <script src="captain.js"></script>
+</body>
+</html>

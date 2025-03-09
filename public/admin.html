@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="/admin.css">
+    <style>
+        .back-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 15px 20px;
+            background-color: #f44336;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .captain-list {
+            display: flex;
+            flex-direction: column;
+            margin-top: 20px;
+        }
+        .captain-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border: 1px solid #ccc;
+            margin-bottom: 5px;
+        }
+        .captain-item button {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            padding: 5px 10px;
+        }
+        .tab-button.selected, .sub-tab-button.selected {
+            background-color:  linear-gradient(to bottom right, #2eff0e, #2e5c40); /* Darker shade to indicate selection */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Style for select elements */
+        select {
+            appearance: none;
+            background-color: #f4f4f9;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            width: 100%;
+            max-width: 300px;
+            margin-bottom: 10px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            font-size: 16px;
+        }
+
+        select:focus {
+            border-color: linear-gradient(to bottom right, #2eff0e, #2e5c40);
+            box-shadow: 0 0 5px rgba(40, 167, 69, 0.5);
+            outline: none;
+        }
+
+        /* Style for order cards with gradient */
+        .order-card {
+            display: flex;
+            flex-direction: column;
+            background: linear-gradient(to bottom right, #ffffff, #e0f7e9);
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease;
+        }
+
+        .order-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .order-card-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .order-card ul {
+            padding-left: 20px;
+            margin: 0;
+        }
+
+        .order-card li {
+            margin-bottom: 5px;
+        }
+
+        .static-text {
+            font-weight: bold;
+        }
+
+        /* Style for delete buttons */
+        #deleteCategoryButton, #deleteSubcategoryButton, #deleteMealButton {
+            background-color: #dc3545; /* Bootstrap's danger color */
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            padding: 10px 20px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            margin-top: 10px;
+        }
+
+        #deleteCategoryButton:hover, #deleteSubcategoryButton:hover, #deleteMealButton:hover {
+            background-color: #c82333; /* Darker shade for hover */
+            transform: translateY(-2px);
+        }
+
+        #deleteCategoryButton:disabled, #deleteSubcategoryButton:disabled, #deleteMealButton:disabled {
+            background-color: #e0e0e0;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <button class="back-button" id="backToLogin">Back to Login</button>
+    <div class="container">
+        <h1>Admin Dashboard</h1>
+        
+        <div class="tab-buttons">
+            <button id="addCaptainTab" class="tab-button">Add New Captain</button>
+            <button id="changePasswordTab" class="tab-button">Change Password</button>
+            <button id="manageRestaurantTab" class="tab-button">Manage Restaurant</button>
+            <button id="analysisTab" class="tab-button">Analysis</button>
+            <button id="dailySummaryTab" class="tab-button">Daily Summary</button>
+            <button id="manageCompletedOrdersTab" class="tab-button">Manage Completed Orders</button>
+            <button id="guestManagementTab" class="tab-button">Guest Management</button> <!-- New Guest Management Tab -->
+        </div>
+
+        <div id="addCaptainContent" class="tab-content">
+            <h2>Add New Captain</h2>
+            <form id="addCaptainForm">
+                <input type="text" id="newCaptainUsername" placeholder="Username" required>
+                <input type="password" id="newCaptainPassword" placeholder="Password" required>
+                <button type="submit">Add Captain</button>
+            </form>
+            <div id="captainList" class="captain-list"></div>
+        </div>
+
+        <div id="changePasswordContent" class="tab-content">
+            <h2>Change Admin Password</h2>
+            <form id="changePasswordForm">
+                <input type="password" id="currentPassword" placeholder="Current Password" required>
+                <input type="password" id="newPassword" placeholder="New Password" required>
+                <input type="password" id="confirmNewPassword" placeholder="Confirm New Password" required>
+                <button type="submit">Change Password</button>
+            </form>
+        </div>
+
+        <div id="manageRestaurantContent" class="tab-content">
+            <h2>Manage Restaurant</h2>
+            <div class="sub-tabs">
+                <button id="waiterTab" class="sub-tab-button">Waiters</button>
+                <button id="menuTab" class="sub-tab-button">Menu</button>
+                <button id="chefTab" class="sub-tab-button">Chefs</button>
+            </div>
+
+            <div id="waiterContent" class="sub-tab-content">
+                <h3>Manage Waiters</h3>
+                <form id="addWaiterForm">
+                    <input type="text" id="waiterName" placeholder="Waiter Name" required>
+                    <input type="password" id="waiterPassword" placeholder="Password" required>
+                    <button type="submit">Add Waiter</button>
+                </form>
+                <div id="waiterList" class="clickable-list"></div>
+                <button id="deleteWaiterButton" disabled>Delete Selected Waiter</button>
+            </div>
+
+            <div id="menuContent" class="sub-tab-content">
+                <h3>Manage Menu</h3>
+                <div class="menu-management">
+                    <div class="menu-column">
+                        <h4>Categories</h4>
+                        <form id="addCategoryForm">
+                            <input type="text" id="categoryName" placeholder="Category Name" required>
+                            <button type="submit">Add Category</button>
+                        </form>
+                        <div id="categoryList" class="clickable-list"></div>
+                        <button id="deleteCategoryButton" disabled>Delete Selected Category</button>
+                    </div>
+                    <div class="menu-column">
+                        <h4>Subcategories</h4>
+                        <form id="addSubcategoryForm">
+                            <input type="text" id="subcategoryName" placeholder="Subcategory Name" required>
+                            <button type="submit">Add Subcategory</button>
+                        </form>
+                        <div id="subcategoryList" class="clickable-list"></div>
+                        <button id="deleteSubcategoryButton" disabled>Delete Selected Subcategory</button>
+                    </div>
+                    <!-- public/admin.html -->
+                    <div class="menu-column">
+                        <h4>Meals</h4>
+                        <form id="addMealForm">
+                            <input type="text" id="mealName" placeholder="Meal Name" required>
+                            <input type="number" id="mealPrice" placeholder="Price" required>
+                            <button type="submit">Add Meal</button>
+                        </form>
+                        <form id="updateMealPriceForm">
+                            <input type="hidden" id="mealIdToUpdate" required>
+                            <input type="number" id="newMealPrice" placeholder="New Price" required>
+                            <button type="submit">Update Price</button>
+                        </form>
+                        <div id="mealList" class="clickable-list"></div>
+                        <button id="deleteMealButton" disabled>Delete Selected Meal</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="chefContent" class="sub-tab-content">
+                <h3>Manage Chefs</h3>
+                <form id="addChefForm">
+                    <input type="text" id="chefName" placeholder="Chef Name" required>
+                    <button type="submit">Add Chef</button>
+                </form>
+                <div id="chefList" class="clickable-list"></div>
+                <button id="deleteChefButton" disabled>Delete Selected Chef</button>
+            </div>
+        </div>
+
+        <div id="guestManagementContent" class="tab-content">
+            <h2>Guest Management</h2>
+            <button id="printGuestManagementButton">Print Guest Management Report</button>
+            <div id="verificationModal" class="modal">
+                <div class="modal-content">
+                    <span class="close-btn">&times;</span>
+                    <h2>Verify Admin Credentials</h2>
+                    <form id="verificationForm">
+                        <label for="username">Username:</label>
+                        <input type="text" id="username" name="username" required>
+                        <label for="password">Password:</label>
+                        <input type="password" id="password" name="password" required>
+                        <button type="submit">Verify</button>
+                    </form>
+                </div>
+            </div>   
+            <div>
+                <input type="text" id="searchBar" placeholder="Search by guest name...">
+            </div>
+            <div id="guestList" class="clickable-list"></div>
+
+        </div>
+
+        <div id="dailySummaryContent" class="tab-content">
+            <h2>Daily Summary</h2>
+            <div class="filter-options">
+                <div class="single-day-summary">
+                    <label for="dailySummaryDatePicker">Select Date:</label>
+                    <input type="date" id="dailySummaryDatePicker" />
+                    <button id="loadDailySummary">Load Summary</button>
+                </div>
+            </div>
+            <button id="printDailySummaryButton" class="print-button">Print Daily Summary</button>
+            <table id="dailySummaryTable">
+                <thead>
+                    <tr>
+                        <!-- Table headers will be dynamically inserted -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Data will be dynamically inserted here -->
+                </tbody>
+            </table>
+        </div>
+
+        <div id="analysisContent" class="tab-content">
+            <div class="filter-options">
+                <div class="single-day-analysis">
+                    <label for="analysisDatePicker">Single Day Analysis:</label>
+                    <input type="date" id="analysisDatePicker" />
+                    <button id="loadSingleDayAnalysis">Analyze Single Day</button>
+                </div>
+                <div class="date-range-analysis">
+                    <label for="analysisStartDate">Date Range Analysis:</label>
+                    <input type="date" id="analysisStartDate" />
+                    <label for="analysisEndDate">to</label>
+                    <input type="date" id="analysisEndDate" />
+                    <button id="loadDateRangeAnalysis">Analyze Date Range</button>
+                </div>
+            </div>
+            <button id="printAnalysisButton" class="print-button">Print Analysis</button>
+            <div id="analysisDataContainer">
+                
+                <!-- Categories, subcategories, and meals will be dynamically inserted here -->
+            </div>
+            <div id="orderCountBar" class="order-count-bar">Total Orders: 0</div>
+        </div>
+
+        <div id="manageCompletedOrdersContent" class="tab-content">
+            <h2>Manage Completed Orders</h2>
+            <button id="deleteCompletedOrdersButton">Delete All Completed Orders</button>
+            <div id="completedOrdersList" class="clickable-list"></div>
+        </div>     
+
+        <p id="message"></p>
+    </div>
+    <script src="/admin.js"></script>
+</body>
+</html>
