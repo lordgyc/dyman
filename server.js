@@ -2,15 +2,17 @@ const express = require('express');
 const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
 const { parse, isWithinInterval } = require('date-fns');
-const { Bonjour } = require('bonjour-service');
 const { protocol } = require('electron');
 const app = express();
 const port = 3000;
+const cors = require('cors')
 
 // Middleware
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 
+// Middleware to check if captain is logged in
+app.use(cors());
 // Database connection
 const db = new sqlite3.Database('./restaurant2.db', (err) => {
     if (err) {
@@ -139,14 +141,7 @@ db.serialize(() => {
         role TEXT NOT NULL
     )`);
 
-    // Insert default admin user
-    db.run('INSERT OR IGNORE INTO users (username, password, role) VALUES (?, ?, ?)', ['admin', 'password123', 'admin'], function(err) {
-        if (err) {
-            console.error('Error inserting default admin user:', err);
-        } else {
-            console.log('Default admin user inserted successfully');
-        }
-    });
+   
 
     // Insert default users
 
@@ -963,17 +958,6 @@ app.delete('/delete-captain/:id', (req, res) => {
     });
 });
 app.listen(port,() => {
-    const bonjour = new Bonjour();
-    const service = bonjour.publish({
-        name: 'dym',
-        type: 'http',
-        port: port
-    });
-
-    service.on('up', () => {
-        console.log('Bonjour service is up and running');
-    });
-
     console.log(`Server running at http://localhost:${port}`);
 });
 
@@ -1453,4 +1437,24 @@ function deleteMeal(mealId, res) {
         res.json({ success: true, message: 'Meal deleted successfully' });
     });
 }
+
+app.post('/add-cashier', async (req, res) => {
+    const { username, password, role } = req.body;
+
+    // Validate input
+    if (!username || !password || !role) {
+        return res.status(400).json({ success: false, message: 'All fields are required.' });
+    }
+
+    try {
+        // Assuming you have a User model to interact with your database
+        const newUser = new User({ username, password, role });
+        await newUser.save(); // Save the new user to the database
+
+        res.json({ success: true, message: 'Cashier added successfully.' });
+    } catch (error) {
+        console.error('Error adding cashier:', error);
+        res.status(500).json({ success: false, message: 'An error occurred while adding the cashier.' });
+    }
+});
 
